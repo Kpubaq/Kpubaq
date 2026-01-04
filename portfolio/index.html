@@ -3,355 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KpubaQ | Premium Portfolio</title>
+    <title>KpubaQ | Portfolio</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
+        /* --- CSS STYLES --- */
         :root {
-            /* --- ОБНОВЛЕННАЯ ПАЛИТРА (ГЛУБОКАЯ И СПОКОЙНАЯ) --- */
-            --bg-main: #030712; /* Глубокий обсидиан, темнее чем раньше */
-            --bg-card: rgba(17, 24, 39, 0.5); /* Более темные, "дорогие" карточки */
-            
-            /* Акцентные цвета - менее насыщенные, более глубокие */
-            --primary: #2563eb; /* Глубокий синий */
-            --secondary: #0891b2; /* Спокойный циан */
-            
-            /* Текст */
-            --text-bright: #ffffff;
-            --text-muted: #94a3b8; /* Серо-голубой для второстепенного текста */
-            
-            /* Градиенты */
-            --gradient-accent: linear-gradient(135deg, var(--primary), var(--secondary));
-            
-            /* Размеры */
-            --radius-xl: 24px;
-            --radius-m: 16px;
+            --bg-color: #0b0d17; /* Очень темный синий, почти черный */
+            --card-bg: rgba(20, 30, 48, 0.6);
+            --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            --text-color: #ffffff;
+            --text-secondary: #a0aab5;
+            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Сброс и базы */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--bg-main);
-            color: var(--text-bright);
-            font-family: 'Plus Jakarta Sans', sans-serif; /* Основной читабельный шрифт */
+            background-color: var(--bg-color);
+            color: var(--text-color);
             overflow-x: hidden;
-            line-height: 1.6;
-        }
-        h1, h2, h3, .btn, .hero-badge { font-family: 'Outfit', sans-serif; } /* Акцентный шрифт */
-
-        /* --- ФОНОВЫЕ ЭФФЕКТЫ (СУПЕР-МЯГКИЕ) --- */
-        /* Едва заметный шум для текстуры */
-        .bg-noise {
-            position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.02;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
-        /* Очень мягкие, медленные цветовые пятна */
-        .bg-glow-spot {
-            position: fixed; width: 50vw; height: 50vw; border-radius: 50%; filter: blur(120px); z-index: -2;
-            opacity: 0.08; /* ОЧЕНЬ НИЗКАЯ ПРОЗРАЧНОСТЬ для комфорта глаз */
-            animation: floatSlow 18s infinite alternate ease-in-out;
+        /* Фон с размытыми пятнами (Glow effects) */
+        .background-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
-        .spot-1 { top: -10%; left: -10%; background: var(--primary); }
-        .spot-2 { bottom: -10%; right: -10%; background: var(--secondary); animation-delay: -9s; opacity: 0.05; }
+        
+        .glow-blob {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 114, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            animation: moveBlob 20s infinite alternate;
+        }
+        .blob-1 { top: -100px; left: -100px; }
+        .blob-2 { bottom: -100px; right: -100px; animation-delay: -10s; }
 
-        @keyframes floatSlow {
+        @keyframes moveBlob {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 20px) scale(1.05); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 95vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
         }
-        .hero-badge {
-            padding: 8px 20px; border-radius: 30px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-            font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 25px;
+
+        .hero h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
         }
+
         .hero h1 {
-            font-size: clamp(3.5rem, 9vw, 7rem); font-weight: 300; line-height: 1; margin-bottom: 25px;
-            color: var(--text-muted);
-        }
-        /* АКЦЕНТ НА ИМЯ - ТОЛСТЫЙ ШРИФТ */
-        .name-highlight {
-            font-weight: 900; /* Максимальная жирность */
-            color: var(--text-bright);
-            font-size: 1.05em; /* Чуть крупнее остального текста */
-            display: inline-block;
-            background: linear-gradient(to bottom right, #fff, #a5b4fc); /* Легкий градиент на тексте */
+            font-size: 5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.1;
         }
-        .typewriter-container {
-            font-size: 1.3rem; color: var(--text-muted); display: flex; gap: 10px; align-items: center; min-height: 1.3em;
+
+        .stack-list {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-        #typewriter { color: var(--secondary); font-weight: 600; position: relative;}
-        #typewriter::after { content: '|'; position: absolute; right: -8px; animation: blink 0.8s step-end infinite; color: var(--secondary);}
-        @keyframes blink { 50% { opacity: 0; } }
+
+        .stack-item {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.05);
+            border: var(--glass-border);
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
 
         /* --- SECTIONS COMMON --- */
-        section { padding: 120px 20px; max-width: 1300px; margin: 0 auto; }
-        .section-header { margin-bottom: 70px; text-align: center; position: relative; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 700; display: inline-block; z-index: 2; position: relative; }
-        .section-header h2::after {
-            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 60px; height: 4px; background: var(--gradient-accent); border-radius: 2px; opacity: 0.7;
+        section {
+            padding: 80px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        /* --- SPOTLIGHT CARDS (МЯГКИЙ СВЕТ) --- */
-        .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
         }
-        .card-spotlight {
-            background-color: rgba(255, 255, 255, 0.015); border-radius: var(--radius-xl);
-            position: relative; padding: 1px; /* Тонкая рамка для света */
-            display: flex; flex-direction: column; overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
         }
-        .card-spotlight:hover { transform: translateY(-8px); }
 
-        /* Свет внутри и на границе */
-        .card-spotlight::before, .card-spotlight::after {
-            content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 1;
+        /* --- TOP 3 PROJECTS --- */
+        .top-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
-        /* Мягкое свечение внутри - ОЧЕНЬ СЛАБОЕ */
-        .card-spotlight::before {
-            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.03), transparent 40%); z-index: 3;
-        }
-        /* Свечение границы - ПРИГЛУШЕННЫЙ СИНИЙ */
-        .card-spotlight::after {
-            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(37, 99, 235, 0.25), transparent 40%); z-index: 1;
-        }
-        .cards-grid:hover > .card-spotlight::after { opacity: 1; }
 
-        .card-inner {
-            background: var(--bg-card); border-radius: var(--radius-xl); padding: 35px; height: 100%; position: relative; z-index: 2;
-            display: flex; flex-direction: column; backdrop-filter: blur(10px);
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            border: var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
         }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.2);
+            border-color: rgba(0, 198, 255, 0.3);
+        }
+
         .card-badge {
-            position: absolute; top: 25px; right: 25px; background: rgba(37, 99, 235, 0.1); color: var(--primary);
-            font-size: 0.7rem; padding: 6px 12px; border-radius: 20px; font-weight: 700; letter-spacing: 0.5px; border: 1px solid rgba(37, 99, 235, 0.2);
+            background: var(--primary-gradient);
+            width: fit-content;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
-        .card-inner h3 { font-size: 1.6rem; margin-bottom: 15px; font-weight: 700; }
-        .tech-stack { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-        .tech-pill {
-            font-size: 0.75rem; padding: 5px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.03);
-            color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.05); font-weight: 500;
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
-        .card-desc { color: var(--text-muted); margin-bottom: 30px; flex-grow: 1; font-size: 0.95rem; }
-        
-        /* --- BUTTONS (SMOOTH) --- */
-        .card-actions { display: flex; gap: 15px; }
+
+        .card-tech {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
         .btn {
-            padding: 12px 28px; border-radius: 14px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
-            transition: all 0.3s ease-out; display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
         }
+
         .btn-primary {
-            background: var(--primary); color: white;
-            box-shadow: 0 4px 20px -5px rgba(37, 99, 235, 0.4); /* Мягкая тень */
+            background: var(--primary-gradient);
+            color: white;
         }
-        .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(37, 99, 235, 0.5); }
         
+        .btn-primary:hover {
+            box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+        }
+
         .btn-outline {
-            background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
         }
-        .btn-outline:hover { background: rgba(255,255,255,0.04); color: white; border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
-        /* --- ARCHIVE GRID --- */
-        .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        /* --- ALL PROJECTS (GRID) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
         .mini-card {
-            background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); padding: 25px; border-radius: var(--radius-m);
-            transition: 0.3s ease-out; display: flex; flex-direction: column;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            transition: 0.3s;
         }
-        .mini-card:hover { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.1); transform: translateY(-3px); }
 
-        /* --- FOOTER --- */
-        footer { padding: 80px 20px; text-align: center; background: linear-gradient(to top, #010205, transparent); margin-top: 100px;}
-        .social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
-        .social-btn {
-            font-size: 1.4rem; color: var(--text-muted); transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); text-decoration: none;
+        .mini-card:hover {
+            background: rgba(255, 255, 255, 0.07);
         }
-        .social-btn:hover { color: var(--primary); transform: scale(1.15) rotate(5deg); background: rgba(37, 99, 235, 0.1); border-color: var(--primary); }
 
         /* --- MODAL --- */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(15px);
-            display: flex; justify-content: center; align-items: center; z-index: 1000;
-            opacity: 0; pointer-events: none; transition: all 0.4s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
         }
-        .modal-overlay.active { opacity: 1; pointer-events: all; }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .modal-content {
-            background: #0f172a; border: 1px solid rgba(255,255,255,0.08); width: 90%; max-width: 550px;
-            padding: 40px; border-radius: var(--radius-xl); transform: translateY(30px) scale(0.95);
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
+            background: #161b29;
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            position: relative;
+            transform: scale(0.8);
+            transition: 0.3s;
         }
-        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0,0,0,0.2);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .social-btn {
+            font-size: 2rem;
+            color: var(--text-secondary);
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            color: #00c6ff;
+            transform: scale(1.1);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            section { padding: 60px 20px; }
+            .top-projects-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-noise"></div>
-    <div class="bg-glow-spot spot-1"></div>
-    <div class="bg-glow-spot spot-2"></div>
+    <div class="background-glow">
+        <div class="glow-blob blob-1"></div>
+        <div class="glow-blob blob-2"></div>
+    </div>
 
     <header class="hero">
-        <div class="hero-badge" data-aos="fade-down">Developer Portfolio</div>
-        <h1 data-aos="fade-up" data-aos-delay="100">
-            Привет, я <span class="name-highlight">kpubaQ</span>
-        </h1>
+        <div data-aos="fade-down" data-aos-duration="1000">
+            <h2>Добро пожаловать на сайт</h2>
+            <h1>kpubaQ</h1>
+        </div>
         
-        <div class="typewriter-container" data-aos="fade-up" data-aos-delay="200">
-            <span>Изучаю:</span> <span id="typewriter"></span>
+        <div class="stack-list" data-aos="fade-up" data-aos-delay="200">
+            <span class="stack-item">Python</span>
+            <span class="stack-item">JavaScript</span>
+            <span class="stack-item">Node.js</span>
+            <span class="stack-item">HTML/CSS</span>
         </div>
 
-        <div style="margin-top: 50px;" data-aos="fade-up" data-aos-delay="300">
-            <a href="#top-projects" class="btn btn-primary" style="padding: 15px 40px; font-size: 1rem;">
-                Смотреть работы <i class="fa-solid fa-arrow-down" style="font-size: 0.8em;"></i>
-            </a>
+        <div class="scroll-down">
+            <i class="fa-solid fa-chevron-down"></i>
         </div>
     </header>
 
     <section id="top-projects">
-        <div class="section-header" data-aos="fade-up">
-            <h2>Избранные проекты</h2>
-        </div>
-        <div class="cards-grid" id="top-projects-container">
+        <h2 class="section-title" data-aos="fade-right">Топ 3 Проекта</h2>
+        <div class="top-projects-grid" id="top-projects-container">
             </div>
     </section>
 
-    <section id="archive">
-        <div class="section-header" data-aos="fade-up">
-            <h2>Архив разработок</h2>
-        </div>
-        <div class="archive-grid" id="archive-container">
+    <section id="all-projects">
+        <h2 class="section-title" data-aos="fade-right">Все проекты</h2>
+        <div class="projects-grid" id="all-projects-container">
             </div>
     </section>
 
     <footer>
         <div class="social-links">
-            <a href="https://github.com/Kpubaq" target="_blank" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
-            <a href="https://www.tiktok.com/@kpubaq" target="_blank" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-            <a href="https://open.spotify.com/playlist/25m8ehkPkWEQ412K7Q157g" target="_blank" class="social-btn" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
+            <a href="https://github.com/Kpubaq" target="_blank" class="social-btn" title="GitHub">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="https://open.spotify.com/playlist/25m8ehkPkWEQ412K7Q157g" target="_blank" class="social-btn" title="Spotify">
+                <i class="fa-brands fa-spotify"></i>
+            </a>
+            <a href="https://www.tiktok.com/@kpubaq" target="_blank" class="social-btn" title="TikTok">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
         </div>
-        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2025 kpubaQ. Crafted with precision.</p>
+        <p style="color: var(--text-secondary); font-size: 0.8rem;">&copy; 2024 kpubaQ. All rights reserved.</p>
     </footer>
 
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 25px;">
-                <h2 id="modal-title" style="font-size: 2rem; color: var(--text-bright);"></h2>
-                <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <p id="modal-desc" style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;"></p>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title" style="margin-bottom: 15px; color: #00c6ff;">Название проекта</h2>
+            <p id="modal-desc" style="line-height: 1.6; color: #ccc;">Описание проекта...</p>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: true, offset: 80, duration: 1000, easing: 'ease-out-cubic' });
+        // Инициализация анимаций
+        AOS.init({
+            once: true,
+            offset: 100
+        });
 
-        // --- ДАННЫЕ (Тот же список, вид другой) ---
+        // ДАННЫЕ ПРОЕКТОВ (Редактируй здесь!)
         const projects = [
-            { name: "AI Core Bot", desc: "Интеллектуальный бот на Python с использованием передовых моделей обработки языка. Асинхронная архитектура.", github: "https://github.com/Kpubaq", top: true, stack: ["Python", "AsyncIO", "AI"] },
-            { name: "Crypto Analytics", desc: "Дашборд для трейдинга криптовалют. Анализ данных в реальном времени, интеграция с биржами через API.", github: "https://github.com/Kpubaq", top: true, stack: ["React", "Node.js", "WebSockets"] },
-            { name: "E-Commerce Engine", desc: "Масштабируемая платформа электронной коммерции. Полный цикл: от каталога до платежного шлюза.", github: "https://github.com/Kpubaq", top: true, stack: ["JS", "Node.js", "MongoDB"] },
-            // Архив
-            { name: "Portfolio v1", desc: "Мой первый веб-сайт.", github: "https://github.com/Kpubaq" },
-            { name: "Weather CLI", desc: "Погода в терминале.", github: "https://github.com/Kpubaq" },
-            { name: "Task Manager", desc: "Управление задачами.", github: "https://github.com/Kpubaq" },
-            { name: "PyGame Snake", desc: "Игра змейка.", github: "https://github.com/Kpubaq" },
-            { name: "Pass Generator", desc: "Генератор паролей.", github: "https://github.com/Kpubaq" },
-            { name: "JS Calculator", desc: "Калькулятор.", github: "https://github.com/Kpubaq" },
-            { name: "Notes App Backend", desc: "API для заметок.", github: "https://github.com/Kpubaq" },
-            { name: "Express Auth", desc: "Система авторизации.", github: "https://github.com/Kpubaq" },
-             { name: "Discord Helper", desc: "Бот модератор.", github: "https://github.com/Kpubaq" },
-            { name: "Site Parser", desc: "Скрапинг данных.", github: "https://github.com/Kpubaq" }
+            // ТОП 3 ПРОЕКТА (Первые 3 в списке будут "Топом")
+            { name: "AI Chat Bot", desc: "Умный чат-бот на Python с использованием OpenAI API. Умеет вести диалог и сохранять контекст.", github: "https://github.com/Kpubaq", top: true },
+            { name: "E-Commerce Shop", desc: "Полноценный интернет-магазин на Node.js и JS. Корзина, оплата, админ-панель.", github: "https://github.com/Kpubaq", top: true },
+            { name: "Portfolio v1", desc: "Мой первый сайт-портфолио, написанный на чистом HTML/CSS с адаптивной версткой.", github: "https://github.com/Kpubaq", top: true },
+            
+            // ОСТАЛЬНЫЕ ПРОЕКТЫ (Генерируем для примера)
+            { name: "Weather App", desc: "Приложение погоды, использующее API.", github: "https://github.com/Kpubaq" },
+            { name: "To-Do List", desc: "Список задач с сохранением в LocalStorage.", github: "https://github.com/Kpubaq" },
+            { name: "Snake Game", desc: "Классическая игра Змейка на Python (Pygame).", github: "https://github.com/Kpubaq" },
+            { name: "Calculator", desc: "Калькулятор с современным дизайном.", github: "https://github.com/Kpubaq" },
+            { name: "Currency Converter", desc: "Конвертер валют в реальном времени.", github: "https://github.com/Kpubaq" },
+            { name: "Password Generator", desc: "Генератор сложных паролей.", github: "https://github.com/Kpubaq" },
+            { name: "Music Player", desc: "JS плеер с визуализацией.", github: "https://github.com/Kpubaq" },
+            { name: "QR Code Gen", desc: "Генератор QR кодов по ссылке.", github: "https://github.com/Kpubaq" },
+            { name: "Quiz App", desc: "Викторина с вопросами на JS.", github: "https://github.com/Kpubaq" },
+            { name: "Timer/Stopwatch", desc: "Таймер обратного отсчета.", github: "https://github.com/Kpubaq" },
+            { name: "Notes App", desc: "Приложение для заметок на Node.js.", github: "https://github.com/Kpubaq" },
+            { name: "Login Form", desc: "Красивая форма входа с валидацией.", github: "https://github.com/Kpubaq" }
         ];
 
-        // Рендер ТОП проектов (Spotlight)
+        // Рендеринг ТОП 3 проектов
         const topContainer = document.getElementById('top-projects-container');
-        projects.filter(p => p.top).forEach((p, i) => {
-            const tags = p.stack.map(t => `<span class="tech-pill">${t}</span>`).join('');
-            const html = `
-                <div class="card-spotlight" data-aos="fade-up" data-aos-delay="${i * 150}">
-                    <div class="card-inner">
-                        <div class="card-badge">FEATURED</div>
-                        <h3>${p.name}</h3>
-                        <div class="tech-stack">${tags}</div>
-                        <p class="card-desc">${p.desc}</p>
-                        <div class="card-actions">
-                            <button class="btn btn-primary" onclick="openModal('${p.name}', '${p.desc}')">
-                                Подробнее
-                            </button>
-                            <a href="${p.github}" target="_blank" class="btn btn-outline" title="GitHub Repo">
-                                <i class="fa-brands fa-github" style="font-size: 1.2rem;"></i>
-                            </a>
-                        </div>
-                    </div>
+        const topProjects = projects.filter(p => p.top);
+
+        topProjects.forEach((proj, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', index * 100);
+            
+            card.innerHTML = `
+                <div>
+                    <div class="card-badge">TOP PROJECT</div>
+                    <h3>${proj.name}</h3>
+                    <p class="card-tech">Python • JS • Node</p>
+                </div>
+                <div class="card-buttons">
+                    <button class="btn btn-primary" onclick="openModal('${proj.name}', '${proj.desc}')">
+                        <i class="fa-solid fa-circle-info"></i> Описание
+                    </button>
+                    <a href="${proj.github}" target="_blank" class="btn btn-outline">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
                 </div>
             `;
-            topContainer.insertAdjacentHTML('beforeend', html);
+            topContainer.appendChild(card);
         });
 
-        // Логика Spotlight (Слежение за мышью)
-        const cards = document.querySelectorAll(".card-spotlight");
-        document.getElementById("top-projects-container").onmousemove = e => {
-            for(const card of cards) {
-                const rect = card.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
-                card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
-            }
-        };
+        // Рендеринг ОСТАЛЬНЫХ проектов (Все 15)
+        const allContainer = document.getElementById('all-projects-container');
+        
+        projects.forEach((proj, index) => {
+            const card = document.createElement('div');
+            card.className = 'mini-card';
+            card.setAttribute('data-aos', 'zoom-in');
+            card.setAttribute('data-aos-delay', 50); // Небольшая задержка
 
-        // Рендер Архива
-        const archiveContainer = document.getElementById('archive-container');
-        projects.filter(p => !p.top).forEach((p, i) => {
-            const html = `
-                <div class="mini-card" data-aos="fade-up" data-aos-delay="${i * 50}" data-aos-offset="50">
-                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;">${p.name}</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1;">${p.desc.substring(0, 60)}...</p>
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem;" onclick="openModal('${p.name}', '${p.desc}')">Инфо</button>
-                        <a href="${p.github}" target="_blank" class="btn btn-outline" style="padding: 8px 12px; color: var(--text-muted);"><i class="fa-brands fa-github"></i></a>
-                    </div>
+            card.innerHTML = `
+                <h3 style="margin-bottom:10px; font-size: 1.1rem;">${proj.name}</h3>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="btn btn-primary" style="font-size: 0.8rem; padding: 5px 10px;" onclick="openModal('${proj.name}', '${proj.desc}')">
+                        Инфо
+                    </button>
+                    <a href="${proj.github}" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 5px 10px;">
+                        Git
+                    </a>
                 </div>
             `;
-            archiveContainer.insertAdjacentHTML('beforeend', html);
+            allContainer.appendChild(card);
         });
 
-        // Печатная машинка
-        const words = ["Python Development", "JavaScript & Node.js", "Modern Web UI/UX"];
-        let i = 0, j = 0, isDeleting = false, speed = 100;
-        function type() {
-            const currentWord = words[i];
-            const displayedStr = isDeleting ? currentWord.substring(0, j--) : currentWord.substring(0, j++);
-            document.getElementById("typewriter").textContent = displayedStr;
-            if (!isDeleting && j === currentWord.length + 1) { isDeleting = true; speed = 1500; }
-            else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % words.length; speed = 200; }
-            else { speed = isDeleting ? 50 : 100; }
-            setTimeout(type, speed);
-        }
-        type();
-
-        // Модальное окно
+        // Логика Модального окна
         const modal = document.getElementById('modal');
-        function openModal(t, d) {
-            document.getElementById('modal-title').innerText = t; document.getElementById('modal-desc').innerText = d;
-            modal.classList.add('active'); document.body.style.overflow = 'hidden';
+        const mTitle = document.getElementById('modal-title');
+        const mDesc = document.getElementById('modal-desc');
+
+        function openModal(title, desc) {
+            mTitle.innerText = title;
+            mDesc.innerText = desc;
+            modal.classList.add('active');
         }
+
         function closeModal() {
-            modal.classList.remove('active'); document.body.style.overflow = 'auto';
+            modal.classList.remove('active');
         }
-        modal.addEventListener('click', (e) => {If (e.target === modal) closeModal();});
+
+        // Закрытие по клику вне окна
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
     </script>
 </body>
 </html>
