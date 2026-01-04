@@ -3,499 +3,625 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KpubaQ | Portfolio</title>
+    <title>KpubaQ | Developer Portfolio</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* --- CSS STYLES --- */
         :root {
-            --bg-color: #0b0d17; /* Очень темный синий, почти черный */
-            --card-bg: rgba(20, 30, 48, 0.6);
-            --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
-            --text-color: #ffffff;
-            --text-secondary: #a0aab5;
-            --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Палитра */
+            --bg-dark: #020617; /* Глубокий, почти черный индиго */
+            --bg-card: rgba(30, 41, 59, 0.4);
+            --primary: #3b82f6; /* Яркий синий */
+            --secondary: #06b6d4; /* Циан */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            /* Градиенты */
+            --gradient-main: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-glow: radial-gradient(circle at center, rgba(59, 130, 246, 0.15), transparent 70%);
+            
+            /* Размеры */
+            --radius: 16px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
+            cursor: default; /* Кастомный курсор можно добавить позже */
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Фон с размытыми пятнами (Glow effects) */
-        .background-glow {
+        h1, h2, h3, .btn {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* --- ФОНОВЫЕ ЭФФЕКТЫ --- */
+        .bg-noise {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             z-index: -1;
-            overflow: hidden;
+            pointer-events: none;
         }
-        
-        .glow-blob {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0, 114, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-            border-radius: 50%;
-            animation: moveBlob 20s infinite alternate;
-        }
-        .blob-1 { top: -100px; left: -100px; }
-        .blob-2 { bottom: -100px; right: -100px; animation-delay: -10s; }
 
-        @keyframes moveBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
+        .bg-glow {
+            position: fixed;
+            width: 60vw;
+            height: 60vw;
+            background: var(--gradient-glow);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -2;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+        .glow-1 { top: -20%; left: -10%; background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent); }
+        .glow-2 { bottom: -20%; right: -10%; background: radial-gradient(circle, rgba(59, 130, 246, 0.2), transparent); animation-delay: -5s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
+            position: relative;
         }
 
-        .hero h2 {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            display: inline-block;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 800;
-            background: var(--primary-gradient);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #94a3b8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-            line-height: 1.1;
         }
 
-        .stack-list {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .stack-item {
-            padding: 8px 16px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.05);
-            border: var(--glass-border);
-            font-size: 0.9rem;
-            backdrop-filter: blur(5px);
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            animation: bounce 2s infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* --- SECTIONS COMMON --- */
-        section {
-            padding: 80px 10%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
+        .hero .name-highlight {
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             position: relative;
             display: inline-block;
         }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            width: 60px;
-            height: 4px;
-            background: var(--primary-gradient);
-            border-radius: 2px;
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            height: 30px; /* Фиксированная высота для анимации печати */
         }
 
-        /* --- TOP 3 PROJECTS --- */
-        .top-projects-grid {
+        #typewriter {
+            color: var(--secondary);
+            font-weight: 600;
+            border-right: 2px solid var(--secondary);
+            padding-right: 5px;
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        /* --- SPOTLIGHT CARDS (GRID) --- */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .line {
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            flex-grow: 1;
+            opacity: 0.5;
+        }
+
+        /* --- КАРТОЧКИ С ЭФФЕКТОМ --- */
+        .cards-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+
+        .cards-wrapper:hover > .card::after {
+            opacity: 1; /* Показываем подсветку границы при наведении на контейнер */
         }
 
         .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 30px;
-            border: var(--glass-border);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-radius: var(--radius);
+            position: relative;
+            padding: 2px; /* Отступ для границы */
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
+            transition: transform 0.3s ease;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.2);
-            border-color: rgba(0, 198, 255, 0.3);
+            transform: translateY(-5px);
         }
 
-        .card-badge {
-            background: var(--primary-gradient);
-            width: fit-content;
-            padding: 5px 10px;
-            border-radius: 5px;
+        /* Spotlight Effect CSS */
+        .card::before, .card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Мягкий свет внутри карточки */
+        .card::before {
+            background: radial-gradient(
+                800px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            z-index: 3;
+        }
+
+        /* Светящаяся граница */
+        .card::after {
+            background: radial-gradient(
+                600px circle at var(--mouse-x) var(--mouse-y), 
+                rgba(59, 130, 246, 0.4),
+                transparent 40%
+            );
+            z-index: 1;
+        }
+
+        .card-content {
+            background: #0f121d; /* Цвет карточки внутри границы */
+            border-radius: calc(var(--radius) - 2px);
+            padding: 30px;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.2));
+            color: var(--secondary);
             font-size: 0.7rem;
-            font-weight: bold;
-            margin-bottom: 15px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            font-weight: 700;
         }
 
         .card h3 {
             font-size: 1.5rem;
             margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .card-tech {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
 
-        .card-buttons {
+        .tech-stack {
             display: flex;
             gap: 10px;
-            margin-top: auto;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
         }
 
+        .tech-pill {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- КНОПКИ --- */
         .btn {
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
             border: none;
             cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
         }
 
-        .btn-primary {
-            background: var(--primary-gradient);
+        .btn-glow {
+            background: var(--gradient-main);
             color: white;
-        }
-        
-        .btn-primary:hover {
-            box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
+        .btn-glow:hover {
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.03);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.08);
             border-color: white;
         }
 
-        /* --- ALL PROJECTS (GRID) --- */
-        .projects-grid {
+        /* --- SMALL PROJECTS GRID --- */
+        .mini-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
         }
-        
+
         .mini-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 12px;
             transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .mini-card:hover {
-            background: rgba(255, 255, 255, 0.07);
-        }
-
-        /* --- MODAL --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: #161b29;
-            width: 90%;
-            max-width: 500px;
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 198, 255, 0.3);
-            position: relative;
-            transform: scale(0.8);
-            transition: 0.3s;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--primary);
         }
 
         /* --- FOOTER --- */
         footer {
-            padding: 50px 20px;
+            padding: 60px 20px;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background: rgba(0,0,0,0.2);
+            position: relative;
+            background: linear-gradient(to top, #000, transparent);
         }
 
-        .social-links {
+        .social-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .social-btn {
-            font-size: 2rem;
-            color: var(--text-secondary);
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: #0f121d;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            border-radius: 24px;
+            transform: scale(0.9) translateY(20px);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal.active .modal-box {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--text-muted);
             transition: 0.3s;
         }
+        .close-btn:hover { color: white; }
 
-        .social-btn:hover {
-            color: #00c6ff;
-            transform: scale(1.1);
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
+        @media(max-width: 768px) {
             .hero h1 { font-size: 3rem; }
-            section { padding: 60px 20px; }
-            .top-projects-grid { grid-template-columns: 1fr; }
+            .section-header h2 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-glow">
-        <div class="glow-blob blob-1"></div>
-        <div class="glow-blob blob-2"></div>
-    </div>
+    <div class="bg-noise"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
 
     <header class="hero">
-        <div data-aos="fade-down" data-aos-duration="1000">
-            <h2>Добро пожаловать на сайт</h2>
-            <h1>kpubaQ</h1>
-        </div>
+        <div class="hero-badge" data-aos="fade-down">Портфолио 2025</div>
+        <h2 data-aos="fade-up" style="font-weight: 300; font-size: 1.5rem; margin-bottom: 10px; color: var(--text-muted);">Добро пожаловать</h2>
+        <h1 data-aos="fade-up" data-aos-delay="100">Я <span class="name-highlight">kpubaQ</span></h1>
         
-        <div class="stack-list" data-aos="fade-up" data-aos-delay="200">
-            <span class="stack-item">Python</span>
-            <span class="stack-item">JavaScript</span>
-            <span class="stack-item">Node.js</span>
-            <span class="stack-item">HTML/CSS</span>
-        </div>
+        <p data-aos="fade-up" data-aos-delay="200">
+            Изучаю: <span id="typewriter"></span>
+        </p>
 
-        <div class="scroll-down">
-            <i class="fa-solid fa-chevron-down"></i>
+        <div style="margin-top: 30px;" data-aos="fade-up" data-aos-delay="300">
+            <a href="#top-projects" class="btn btn-glow">
+                Смотреть проекты <i class="fa-solid fa-arrow-down"></i>
+            </a>
         </div>
     </header>
 
     <section id="top-projects">
-        <h2 class="section-title" data-aos="fade-right">Топ 3 Проекта</h2>
-        <div class="top-projects-grid" id="top-projects-container">
+        <div class="section-header" data-aos="fade-right">
+            <h2>Топ проекты</h2>
+            <div class="line"></div>
+        </div>
+        
+        <div class="cards-wrapper" id="top-projects-container">
             </div>
     </section>
 
     <section id="all-projects">
-        <h2 class="section-title" data-aos="fade-right">Все проекты</h2>
-        <div class="projects-grid" id="all-projects-container">
+        <div class="section-header" data-aos="fade-right">
+            <h2>Архив проектов</h2>
+            <div class="line"></div>
+        </div>
+        <div class="mini-grid" id="all-projects-container">
             </div>
     </section>
 
     <footer>
-        <div class="social-links">
-            <a href="https://github.com/Kpubaq" target="_blank" class="social-btn" title="GitHub">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a href="https://open.spotify.com/playlist/25m8ehkPkWEQ412K7Q157g" target="_blank" class="social-btn" title="Spotify">
-                <i class="fa-brands fa-spotify"></i>
-            </a>
-            <a href="https://www.tiktok.com/@kpubaq" target="_blank" class="social-btn" title="TikTok">
-                <i class="fa-brands fa-tiktok"></i>
-            </a>
+        <div class="social-container">
+            <a href="https://www.tiktok.com/@kpubaq" target="_blank" class="social-link" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://github.com/Kpubaq" target="_blank" class="social-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://open.spotify.com/playlist/25m8ehkPkWEQ412K7Q157g" target="_blank" class="social-link" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
         </div>
-        <p style="color: var(--text-secondary); font-size: 0.8rem;">&copy; 2024 kpubaQ. All rights reserved.</p>
+        <p style="color: var(--text-muted);">© 2025 kpubaQ. Design by Gemini.</p>
     </footer>
 
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 id="modal-title" style="margin-bottom: 15px; color: #00c6ff;">Название проекта</h2>
-            <p id="modal-desc" style="line-height: 1.6; color: #ccc;">Описание проекта...</p>
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></span>
+            <h2 id="modal-title" style="margin-bottom: 15px; font-size: 2rem; color: var(--primary);"></h2>
+            <p id="modal-desc" style="color: #cbd5e1; line-height: 1.7; margin-bottom: 30px;"></p>
+            <div style="text-align: right;">
+                <button class="btn btn-glass" onclick="closeModal()">Закрыть</button>
+            </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Инициализация анимаций
-        AOS.init({
-            once: true,
-            offset: 100
-        });
+        AOS.init({ once: true, offset: 50, duration: 800 });
 
-        // ДАННЫЕ ПРОЕКТОВ (Редактируй здесь!)
+        // --- ДАННЫЕ ПРОЕКТОВ ---
         const projects = [
-            // ТОП 3 ПРОЕКТА (Первые 3 в списке будут "Топом")
-            { name: "AI Chat Bot", desc: "Умный чат-бот на Python с использованием OpenAI API. Умеет вести диалог и сохранять контекст.", github: "https://github.com/Kpubaq", top: true },
-            { name: "E-Commerce Shop", desc: "Полноценный интернет-магазин на Node.js и JS. Корзина, оплата, админ-панель.", github: "https://github.com/Kpubaq", top: true },
-            { name: "Portfolio v1", desc: "Мой первый сайт-портфолио, написанный на чистом HTML/CSS с адаптивной версткой.", github: "https://github.com/Kpubaq", top: true },
+            // TOP 3
+            { name: "Neural Chat Bot", desc: "Продвинутый бот на Python. Использует асинхронность и современные библиотеки AI.", github: "https://github.com/Kpubaq", top: true, stack: ["Python", "AI", "API"] },
+            { name: "Crypto Dashboard", desc: "Веб-приложение для отслеживания курсов криптовалют в реальном времени. Графики, аналитика.", github: "https://github.com/Kpubaq", top: true, stack: ["React", "Node.js", "API"] },
+            { name: "Online Store", desc: "Масштабируемый интернет-магазин с админкой и платежной системой.", github: "https://github.com/Kpubaq", top: true, stack: ["JS", "HTML/CSS", "Stripe"] },
             
-            // ОСТАЛЬНЫЕ ПРОЕКТЫ (Генерируем для примера)
-            { name: "Weather App", desc: "Приложение погоды, использующее API.", github: "https://github.com/Kpubaq" },
-            { name: "To-Do List", desc: "Список задач с сохранением в LocalStorage.", github: "https://github.com/Kpubaq" },
-            { name: "Snake Game", desc: "Классическая игра Змейка на Python (Pygame).", github: "https://github.com/Kpubaq" },
-            { name: "Calculator", desc: "Калькулятор с современным дизайном.", github: "https://github.com/Kpubaq" },
-            { name: "Currency Converter", desc: "Конвертер валют в реальном времени.", github: "https://github.com/Kpubaq" },
-            { name: "Password Generator", desc: "Генератор сложных паролей.", github: "https://github.com/Kpubaq" },
-            { name: "Music Player", desc: "JS плеер с визуализацией.", github: "https://github.com/Kpubaq" },
-            { name: "QR Code Gen", desc: "Генератор QR кодов по ссылке.", github: "https://github.com/Kpubaq" },
-            { name: "Quiz App", desc: "Викторина с вопросами на JS.", github: "https://github.com/Kpubaq" },
-            { name: "Timer/Stopwatch", desc: "Таймер обратного отсчета.", github: "https://github.com/Kpubaq" },
-            { name: "Notes App", desc: "Приложение для заметок на Node.js.", github: "https://github.com/Kpubaq" },
-            { name: "Login Form", desc: "Красивая форма входа с валидацией.", github: "https://github.com/Kpubaq" }
+            // ARCHIVE
+            { name: "Portfolio v1", desc: "Первая версия сайта.", github: "https://github.com/Kpubaq" },
+            { name: "Snake Game", desc: "Классическая змейка.", github: "https://github.com/Kpubaq" },
+            { name: "Weather API", desc: "Прогноз погоды.", github: "https://github.com/Kpubaq" },
+            { name: "Todo App", desc: "Менеджер задач.", github: "https://github.com/Kpubaq" },
+            { name: "Calc Pro", desc: "Калькулятор.", github: "https://github.com/Kpubaq" },
+            { name: "Pass Gen", desc: "Генератор паролей.", github: "https://github.com/Kpubaq" },
+            { name: "Music Viz", desc: "Визуализатор музыки.", github: "https://github.com/Kpubaq" },
+            { name: "QR Maker", desc: "Создание QR кодов.", github: "https://github.com/Kpubaq" },
+            { name: "Quiz JS", desc: "Викторина.", github: "https://github.com/Kpubaq" },
+            { name: "Timer", desc: "Секундомер.", github: "https://github.com/Kpubaq" },
+            { name: "Note Taking", desc: "Заметки.", github: "https://github.com/Kpubaq" },
+            { name: "Login UI", desc: "Форма входа.", github: "https://github.com/Kpubaq" },
+            { name: "Discord Bot", desc: "Бот для сервера.", github: "https://github.com/Kpubaq" },
+            { name: "Parser", desc: "Парсер сайтов.", github: "https://github.com/Kpubaq" },
+            { name: "Landing Page", desc: "Простой лендинг.", github: "https://github.com/Kpubaq" }
         ];
 
-        // Рендеринг ТОП 3 проектов
+        // --- РЕНДЕРИНГ TOP 3 ---
         const topContainer = document.getElementById('top-projects-container');
-        const topProjects = projects.filter(p => p.top);
-
-        topProjects.forEach((proj, index) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-aos-delay', index * 100);
+        projects.filter(p => p.top).forEach((p, i) => {
+            const tags = p.stack.map(t => `<span class="tech-pill">${t}</span>`).join('');
             
-            card.innerHTML = `
-                <div>
-                    <div class="card-badge">TOP PROJECT</div>
-                    <h3>${proj.name}</h3>
-                    <p class="card-tech">Python • JS • Node</p>
-                </div>
-                <div class="card-buttons">
-                    <button class="btn btn-primary" onclick="openModal('${proj.name}', '${proj.desc}')">
-                        <i class="fa-solid fa-circle-info"></i> Описание
-                    </button>
-                    <a href="${proj.github}" target="_blank" class="btn btn-outline">
-                        <i class="fa-brands fa-github"></i> GitHub
-                    </a>
+            const html = `
+                <div class="card" data-aos="fade-up" data-aos-delay="${i * 100}">
+                    <div class="card-content">
+                        <div class="top-badge">TOP PROJECT</div>
+                        <h3>${p.name}</h3>
+                        <div class="tech-stack">${tags}</div>
+                        <p>${p.desc}</p>
+                        <div class="card-actions">
+                            <button class="btn btn-glow" onclick="openModal('${p.name}', '${p.desc}')">
+                                Описание
+                            </button>
+                            <a href="${p.github}" target="_blank" class="btn btn-glass">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             `;
-            topContainer.appendChild(card);
+            topContainer.insertAdjacentHTML('beforeend', html);
         });
 
-        // Рендеринг ОСТАЛЬНЫХ проектов (Все 15)
+        // --- SPOTLIGHT EFFECT (Мышь управляет светом) ---
+        const cards = document.querySelectorAll(".card");
+        document.getElementById("top-projects-container").onmousemove = e => {
+            for(const card of cards) {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        };
+
+        // --- РЕНДЕРИНГ ОСТАЛЬНЫХ ---
         const allContainer = document.getElementById('all-projects-container');
-        
-        projects.forEach((proj, index) => {
-            const card = document.createElement('div');
-            card.className = 'mini-card';
-            card.setAttribute('data-aos', 'zoom-in');
-            card.setAttribute('data-aos-delay', 50); // Небольшая задержка
-
-            card.innerHTML = `
-                <h3 style="margin-bottom:10px; font-size: 1.1rem;">${proj.name}</h3>
-                <div style="display: flex; gap: 10px; margin-top: 15px;">
-                    <button class="btn btn-primary" style="font-size: 0.8rem; padding: 5px 10px;" onclick="openModal('${proj.name}', '${proj.desc}')">
-                        Инфо
-                    </button>
-                    <a href="${proj.github}" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 5px 10px;">
-                        Git
-                    </a>
+        projects.filter(p => !p.top).forEach((p, i) => {
+            const html = `
+                <div class="mini-card" data-aos="zoom-in" data-aos-delay="${i * 50}">
+                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">${p.name}</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">${p.desc.substring(0, 50)}...</p>
+                    <div style="display:flex; gap:10px; margin-top:auto;">
+                        <button class="btn btn-glass" style="padding: 8px 16px; font-size: 0.8rem;" onclick="openModal('${p.name}', '${p.desc}')">Инфо</button>
+                        <a href="${p.github}" target="_blank" class="btn btn-glass" style="padding: 8px 12px;"><i class="fa-brands fa-github"></i></a>
+                    </div>
                 </div>
             `;
-            allContainer.appendChild(card);
+            allContainer.insertAdjacentHTML('beforeend', html);
         });
 
-        // Логика Модального окна
-        const modal = document.getElementById('modal');
-        const mTitle = document.getElementById('modal-title');
-        const mDesc = document.getElementById('modal-desc');
+        // --- TYPING EFFECT ---
+        const words = ["Python", "JavaScript", "HTML & CSS", "Node.js"];
+        let i = 0;
+        let timer;
 
+        function typeWriter() {
+            const heading = document.getElementById("typewriter");
+            const word = words[i];
+            const current = heading.textContent;
+
+            if (!heading.classList.contains("deleting")) {
+                heading.textContent = word.substring(0, current.length + 1);
+                if (current.length === word.length) {
+                    heading.classList.add("deleting");
+                    setTimeout(typeWriter, 1500); // Пауза перед удалением
+                } else {
+                    setTimeout(typeWriter, 100); // Скорость печати
+                }
+            } else {
+                heading.textContent = word.substring(0, current.length - 1);
+                if (current.length === 0) {
+                    heading.classList.remove("deleting");
+                    i = (i + 1) % words.length;
+                    setTimeout(typeWriter, 500);
+                } else {
+                    setTimeout(typeWriter, 50); // Скорость удаления
+                }
+            }
+        }
+        typeWriter();
+
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('modal');
         function openModal(title, desc) {
-            mTitle.innerText = title;
-            mDesc.innerText = desc;
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-desc').textContent = desc;
             modal.classList.add('active');
         }
-
         function closeModal() {
             modal.classList.remove('active');
         }
-
-        // Закрытие по клику вне окна
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
-
     </script>
 </body>
 </html>
