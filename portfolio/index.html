@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KpubaQ | Premium Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* --- ОБНОВЛЕННАЯ ПАЛИТРА (ГЛУБОКАЯ И СПОКОЙНАЯ) --- */
+            --bg-main: #030712; /* Глубокий обсидиан, темнее чем раньше */
+            --bg-card: rgba(17, 24, 39, 0.5); /* Более темные, "дорогие" карточки */
+            
+            /* Акцентные цвета - менее насыщенные, более глубокие */
+            --primary: #2563eb; /* Глубокий синий */
+            --secondary: #0891b2; /* Спокойный циан */
+            
+            /* Текст */
+            --text-bright: #ffffff;
+            --text-muted: #94a3b8; /* Серо-голубой для второстепенного текста */
+            
+            /* Градиенты */
+            --gradient-accent: linear-gradient(135deg, var(--primary), var(--secondary));
+            
+            /* Размеры */
+            --radius-xl: 24px;
+            --radius-m: 16px;
+        }
+
+        /* Сброс и базы */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-bright);
+            font-family: 'Plus Jakarta Sans', sans-serif; /* Основной читабельный шрифт */
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        h1, h2, h3, .btn, .hero-badge { font-family: 'Outfit', sans-serif; } /* Акцентный шрифт */
+
+        /* --- ФОНОВЫЕ ЭФФЕКТЫ (СУПЕР-МЯГКИЕ) --- */
+        /* Едва заметный шум для текстуры */
+        .bg-noise {
+            position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Очень мягкие, медленные цветовые пятна */
+        .bg-glow-spot {
+            position: fixed; width: 50vw; height: 50vw; border-radius: 50%; filter: blur(120px); z-index: -2;
+            opacity: 0.08; /* ОЧЕНЬ НИЗКАЯ ПРОЗРАЧНОСТЬ для комфорта глаз */
+            animation: floatSlow 18s infinite alternate ease-in-out;
+        }
+        .spot-1 { top: -10%; left: -10%; background: var(--primary); }
+        .spot-2 { bottom: -10%; right: -10%; background: var(--secondary); animation-delay: -9s; opacity: 0.05; }
+
+        @keyframes floatSlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 20px) scale(1.05); }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 95vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;
+        }
+        .hero-badge {
+            padding: 8px 20px; border-radius: 30px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 25px;
+        }
+        .hero h1 {
+            font-size: clamp(3.5rem, 9vw, 7rem); font-weight: 300; line-height: 1; margin-bottom: 25px;
+            color: var(--text-muted);
+        }
+        /* АКЦЕНТ НА ИМЯ - ТОЛСТЫЙ ШРИФТ */
+        .name-highlight {
+            font-weight: 900; /* Максимальная жирность */
+            color: var(--text-bright);
+            font-size: 1.05em; /* Чуть крупнее остального текста */
+            display: inline-block;
+            background: linear-gradient(to bottom right, #fff, #a5b4fc); /* Легкий градиент на тексте */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .typewriter-container {
+            font-size: 1.3rem; color: var(--text-muted); display: flex; gap: 10px; align-items: center; min-height: 1.3em;
+        }
+        #typewriter { color: var(--secondary); font-weight: 600; position: relative;}
+        #typewriter::after { content: '|'; position: absolute; right: -8px; animation: blink 0.8s step-end infinite; color: var(--secondary);}
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- SECTIONS COMMON --- */
+        section { padding: 120px 20px; max-width: 1300px; margin: 0 auto; }
+        .section-header { margin-bottom: 70px; text-align: center; position: relative; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 700; display: inline-block; z-index: 2; position: relative; }
+        .section-header h2::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 4px; background: var(--gradient-accent); border-radius: 2px; opacity: 0.7;
+        }
+
+        /* --- SPOTLIGHT CARDS (МЯГКИЙ СВЕТ) --- */
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;
+        }
+        .card-spotlight {
+            background-color: rgba(255, 255, 255, 0.015); border-radius: var(--radius-xl);
+            position: relative; padding: 1px; /* Тонкая рамка для света */
+            display: flex; flex-direction: column; overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .card-spotlight:hover { transform: translateY(-8px); }
+
+        /* Свет внутри и на границе */
+        .card-spotlight::before, .card-spotlight::after {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; z-index: 1;
+        }
+        /* Мягкое свечение внутри - ОЧЕНЬ СЛАБОЕ */
+        .card-spotlight::before {
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.03), transparent 40%); z-index: 3;
+        }
+        /* Свечение границы - ПРИГЛУШЕННЫЙ СИНИЙ */
+        .card-spotlight::after {
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(37, 99, 235, 0.25), transparent 40%); z-index: 1;
+        }
+        .cards-grid:hover > .card-spotlight::after { opacity: 1; }
+
+        .card-inner {
+            background: var(--bg-card); border-radius: var(--radius-xl); padding: 35px; height: 100%; position: relative; z-index: 2;
+            display: flex; flex-direction: column; backdrop-filter: blur(10px);
+        }
+        .card-badge {
+            position: absolute; top: 25px; right: 25px; background: rgba(37, 99, 235, 0.1); color: var(--primary);
+            font-size: 0.7rem; padding: 6px 12px; border-radius: 20px; font-weight: 700; letter-spacing: 0.5px; border: 1px solid rgba(37, 99, 235, 0.2);
+        }
+        .card-inner h3 { font-size: 1.6rem; margin-bottom: 15px; font-weight: 700; }
+        .tech-stack { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .tech-pill {
+            font-size: 0.75rem; padding: 5px 12px; border-radius: 8px; background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted); border: 1px solid rgba(255, 255, 255, 0.05); font-weight: 500;
+        }
+        .card-desc { color: var(--text-muted); margin-bottom: 30px; flex-grow: 1; font-size: 0.95rem; }
+        
+        /* --- BUTTONS (SMOOTH) --- */
+        .card-actions { display: flex; gap: 15px; }
+        .btn {
+            padding: 12px 28px; border-radius: 14px; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+            transition: all 0.3s ease-out; display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer;
+        }
+        .btn-primary {
+            background: var(--primary); color: white;
+            box-shadow: 0 4px 20px -5px rgba(37, 99, 235, 0.4); /* Мягкая тень */
+        }
+        .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(37, 99, 235, 0.5); }
+        
+        .btn-outline {
+            background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.04); color: white; border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+        /* --- ARCHIVE GRID --- */
+        .archive-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+        .mini-card {
+            background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); padding: 25px; border-radius: var(--radius-m);
+            transition: 0.3s ease-out; display: flex; flex-direction: column;
+        }
+        .mini-card:hover { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.1); transform: translateY(-3px); }
+
+        /* --- FOOTER --- */
+        footer { padding: 80px 20px; text-align: center; background: linear-gradient(to top, #010205, transparent); margin-top: 100px;}
+        .social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; }
+        .social-btn {
+            font-size: 1.4rem; color: var(--text-muted); transition: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); text-decoration: none;
+        }
+        .social-btn:hover { color: var(--primary); transform: scale(1.15) rotate(5deg); background: rgba(37, 99, 235, 0.1); border-color: var(--primary); }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(3, 7, 18, 0.85); backdrop-filter: blur(15px);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; pointer-events: none; transition: all 0.4s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-content {
+            background: #0f172a; border: 1px solid rgba(255,255,255,0.08); width: 90%; max-width: 550px;
+            padding: 40px; border-radius: var(--radius-xl); transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
+    </style>
+</head>
+<body>
+
+    <div class="bg-noise"></div>
+    <div class="bg-glow-spot spot-1"></div>
+    <div class="bg-glow-spot spot-2"></div>
+
+    <header class="hero">
+        <div class="hero-badge" data-aos="fade-down">Developer Portfolio</div>
+        <h1 data-aos="fade-up" data-aos-delay="100">
+            Привет, <span class="name-highlight">kpubaQ</span>
+        </h1>
+        
+        <div class="typewriter-container" data-aos="fade-up" data-aos-delay="200">
+            <span>Изучаю:</span> <span id="typewriter"></span>
+        </div>
+
+        <div style="margin-top: 50px;" data-aos="fade-up" data-aos-delay="300">
+            <a href="#top-projects" class="btn btn-primary" style="padding: 15px 40px; font-size: 1rem;">
+                Смотреть работы <i class="fa-solid fa-arrow-down" style="font-size: 0.8em;"></i>
+            </a>
+        </div>
+    </header>
+
+    <section id="top-projects">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Избранные проекты</h2>
+        </div>
+        <div class="cards-grid" id="top-projects-container">
+            </div>
+    </section>
+
+    <section id="archive">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Архив разработок</h2>
+        </div>
+        <div class="archive-grid" id="archive-container">
+            </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/Kpubaq" target="_blank" class="social-btn" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.tiktok.com/@kpubaq" target="_blank" class="social-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://open.spotify.com/playlist/25m8ehkPkWEQ412K7Q157g" target="_blank" class="social-btn" title="Spotify"><i class="fa-brands fa-spotify"></i></a>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2025 kpubaQ. Design by kpubaQ.</p>
+    </footer>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 25px;">
+                <h2 id="modal-title" style="font-size: 2rem; color: var(--text-bright);"></h2>
+                <button onclick="closeModal()" style="background:none; border:none; color:var(--text-muted); font-size: 1.5rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p id="modal-desc" style="color: var(--text-muted); line-height: 1.8; font-size: 1.05rem;"></p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 80, duration: 1000, easing: 'ease-out-cubic' });
+
+        // --- ДАННЫЕ (Тот же список, вид другой) ---
+        const projects = [
+            { name: "AI Core Bot", desc: "Интеллектуальный бот на Python с использованием передовых моделей обработки языка. Асинхронная архитектура.", github: "https://github.com/Kpubaq", top: true, stack: ["Python", "AsyncIO", "AI"] },
+            { name: "Crypto Analytics", desc: "Дашборд для трейдинга криптовалют. Анализ данных в реальном времени, интеграция с биржами через API.", github: "https://github.com/Kpubaq", top: true, stack: ["React", "Node.js", "WebSockets"] },
+            { name: "E-Commerce Engine", desc: "Масштабируемая платформа электронной коммерции. Полный цикл: от каталога до платежного шлюза.", github: "https://github.com/Kpubaq", top: true, stack: ["JS", "Node.js", "MongoDB"] },
+            // Архив
+            { name: "Portfolio v1", desc: "Мой первый веб-сайт.", github: "https://github.com/Kpubaq" },
+            { name: "Weather CLI", desc: "Погода в терминале.", github: "https://github.com/Kpubaq" },
+            { name: "Task Manager", desc: "Управление задачами.", github: "https://github.com/Kpubaq" },
+            { name: "PyGame Snake", desc: "Игра змейка.", github: "https://github.com/Kpubaq" },
+            { name: "Pass Generator", desc: "Генератор паролей.", github: "https://github.com/Kpubaq" },
+            { name: "JS Calculator", desc: "Калькулятор.", github: "https://github.com/Kpubaq" },
+            { name: "Notes App Backend", desc: "API для заметок.", github: "https://github.com/Kpubaq" },
+            { name: "Express Auth", desc: "Система авторизации.", github: "https://github.com/Kpubaq" },
+             { name: "Discord Helper", desc: "Бот модератор.", github: "https://github.com/Kpubaq" },
+            { name: "Site Parser", desc: "Скрапинг данных.", github: "https://github.com/Kpubaq" }
+        ];
+
+        // Рендер ТОП проектов (Spotlight)
+        const topContainer = document.getElementById('top-projects-container');
+        projects.filter(p => p.top).forEach((p, i) => {
+            const tags = p.stack.map(t => `<span class="tech-pill">${t}</span>`).join('');
+            const html = `
+                <div class="card-spotlight" data-aos="fade-up" data-aos-delay="${i * 150}">
+                    <div class="card-inner">
+                        <div class="card-badge">FEATURED</div>
+                        <h3>${p.name}</h3>
+                        <div class="tech-stack">${tags}</div>
+                        <p class="card-desc">${p.desc}</p>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="openModal('${p.name}', '${p.desc}')">
+                                Подробнее
+                            </button>
+                            <a href="${p.github}" target="_blank" class="btn btn-outline" title="GitHub Repo">
+                                <i class="fa-brands fa-github" style="font-size: 1.2rem;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            topContainer.insertAdjacentHTML('beforeend', html);
+        });
+
+        // Логика Spotlight (Слежение за мышью)
+        const cards = document.querySelectorAll(".card-spotlight");
+        document.getElementById("top-projects-container").onmousemove = e => {
+            for(const card of cards) {
+                const rect = card.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
+            }
+        };
+
+        // Рендер Архива
+        const archiveContainer = document.getElementById('archive-container');
+        projects.filter(p => !p.top).forEach((p, i) => {
+            const html = `
+                <div class="mini-card" data-aos="fade-up" data-aos-delay="${i * 50}" data-aos-offset="50">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;">${p.name}</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; flex-grow: 1;">${p.desc.substring(0, 60)}...</p>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-outline" style="padding: 8px 16px; font-size: 0.8rem;" onclick="openModal('${p.name}', '${p.desc}')">Инфо</button>
+                        <a href="${p.github}" target="_blank" class="btn btn-outline" style="padding: 8px 12px; color: var(--text-muted);"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            `;
+            archiveContainer.insertAdjacentHTML('beforeend', html);
+        });
+
+        // Печатная машинка
+        const words = ["Python Development", "JavaScript & Node.js", "Modern Web UI/UX"];
+        let i = 0, j = 0, isDeleting = false, speed = 100;
+        function type() {
+            const currentWord = words[i];
+            const displayedStr = isDeleting ? currentWord.substring(0, j--) : currentWord.substring(0, j++);
+            document.getElementById("typewriter").textContent = displayedStr;
+            if (!isDeleting && j === currentWord.length + 1) { isDeleting = true; speed = 1500; }
+            else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % words.length; speed = 200; }
+            else { speed = isDeleting ? 50 : 100; }
+            setTimeout(type, speed);
+        }
+        type();
+
+        // Модальное окно
+        const modal = document.getElementById('modal');
+        function openModal(t, d) {
+            document.getElementById('modal-title').innerText = t; document.getElementById('modal-desc').innerText = d;
+            modal.classList.add('active'); document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            modal.classList.remove('active'); document.body.style.overflow = 'auto';
+        }
+        modal.addEventListener('click', (e) => {If (e.target === modal) closeModal();});
+    </script>
+</body>
+</html>
